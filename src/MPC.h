@@ -12,11 +12,11 @@
 // Set weights parameters for the cost function
 #define W_CTE 5000   // Weight for cross track error
 #define W_EPSI 5000  // Weight for PSI error
-#define W_DV 500    // Increase to remove sharp turns at high speeds
-#define W_DELTA 5
-#define W_A 5
-#define W_DDELTA 200 // increase to remove sharp turns
-#define W_DA 200  //increase to remove sudden acceleration or de-acceleration
+#define W_DV 500     // Increase to remove sharp turns at high speeds
+#define W_DELTA 5    // Weight for Delta (steering)
+#define W_A 5		 // Weight for acceleration
+#define W_DDELTA 200 // Weight for delta rate. To increase to remove sharp turns
+#define W_DA 200     // Weight for acceleration rate. To increase to remove sudden acceleration or de-acceleration
 
 // Set lower and upper limits for variables.
 #define DED25RAD 0.436332 // 25 deg in rad, used as delta bound

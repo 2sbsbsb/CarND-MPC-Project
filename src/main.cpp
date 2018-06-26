@@ -129,23 +129,22 @@ int main() {
 
 
             Eigen::VectorXd state(6);
-            // Assuming the state is at origin
+            // Assuming the starting state is at origin
             state << 0, 0, 0, v, cte, epsi;
 
             // Predict the state after 0.1 SEC
             double Lf = 2.67;
 			const double dt = 0.1;
 
-			const double px_time = v * dt;
-			const double py_time = 0;
-			const double psi_time = - v * steer_value * dt / Lf;
-			const double v_time = v + throttle_value * dt;
-			const double cte_time = cte + v * sin(epsi) * dt;
-			const double epsi_time = epsi + psi_time;
+			// Update State at dt
+			state[0] = state[0] + state[3] * cos(state[2]) * dt; // x
+			state[1] = state[1] + state[3] * sin(state[2]) * dt; // y
+			state[2] = state[2] - state[3] * steer_value * dt / Lf; // psi
+			state[3] = state[3] + throttle_value * dt; // v
+			state[4] = state[4] + state[3] * sin(epsi) * dt; // CTE
+			state[5] = epsi + state[2]; // EPSI
 
-			state << px_time, py_time, psi_time, v_time, cte_time, epsi_time;
-
-			// Calculate the actuators given the state and the cofficient of the polynomical
+			// Calculate the actuators given the state and the coefficient of the polynomial
             auto vars = mpc.Solve(state, coeffs);
 
             // New steer value and throttle value
