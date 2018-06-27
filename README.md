@@ -1,6 +1,46 @@
 # CarND-Controls-MPC
 Self-Driving Car Engineer Nanodegree Program
 
+## The Model
+
+Kinemetic model is used for model prediction. It is a simplifications of dynamic models that ignore tire forces, gravity, and mass.
+
+[x,y,ψ,v] is the state of the vehicle, Lf is a physical characteristic of the vehicle, and [δ,a] are the actuators or control inputs to our system. State changes over time based on the previous state and current actuator inputs are defined by the equatiion.
+
+![alt text](model.JPG "Model Equation")
+
+## Model Predictive Control with Latency
+Kinematic equations is used to predict the states for after T sec before sending them to MPC.
+
+## Timestep Length and Elapsed Duration (N & dt)
+
+The prediction horizon is the duration over which future predictions are made. We’ll refer to this as T.
+
+T is the product of two other variables, N and dt.
+
+N is the number of timesteps in the horizon. dt is how much time elapses between actuations. 
+
+With the idea that beyond a certain time the trajectory will change significantly, I have used N=10 and dt=0.05 after several run.
+
+## Polynomial Fitting and MPC Preprocessing
+
+The global co-ordinate system has been converted into vehicle co-ordinate system. The road trazactrory is mathematically 
+represented by 3rd degree polynomial hence used polyfit to generate the 3 degree polynomial for the given x and y waypoints.
+The program used polyeval to evaluate y values for given x. 
+
+
+Cost function are setup to minimize cross tracking error and orientation errors. Reference speed (60) has also been added to the cost function. The rate change of delta (steering) and acceleration has been added too to avoid sudden or sharp changes in speed or turns.
+
+The weight has been added to each of these variables for scaling purpose and the values are arrived after several runs.
+
+
+Short Video 
+
+<a href="https://youtu.be/nmDxQFMsvn4
+" target="_blank"><img src="http://img.youtube.com/vi/nmDxQFMsvn4/0.jpg" 
+alt="PID drive controller" width="240" height="180" border="10" /></a>
+
+
 ---
 
 ## Dependencies
