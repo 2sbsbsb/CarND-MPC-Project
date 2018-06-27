@@ -96,7 +96,7 @@ class FG_eval {
           
           AD<double> a = vars[a_start + t - 1];
           AD<double> delta = vars[delta_start + t - 1];
-          if (t > 1) {   // use previous actuations (to account for latency)
+          if (t > 1) {   // use previous actuation (to account for latency)
               a = vars[a_start + t - 2];
               delta = vars[delta_start + t - 2];
           }
